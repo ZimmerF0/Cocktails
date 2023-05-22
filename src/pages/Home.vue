@@ -9,21 +9,28 @@ rootStore.getIngredients();
 
 const { ingredients, ingredient, cocktails } = storeToRefs(rootStore);
 
-
 function getCocktails() {
   rootStore.getCocktails(rootStore.ingredient);
+}
+
+function removeIngredient() {
+  rootStore.ingredient = null;
 }
 </script>
 
 <template>
-  <AppLayout imgUrl="/src/assets/img/bg-1.jpg">
+  <AppLayout
+    imgUrl="/src/assets/img/bg-1.jpg"
+    :backFunc="removeIngredient"
+    :is-back-button-visible="!!ingredient"
+  >
     <div class="wrapper">
       <div v-if="!ingredient || !cocktails" class="info">
         <div class="title">Choose your drink</div>
         <div class="line"></div>
         <div class="select-wrapper">
           <el-select
-            v-model="rootStore.ingredient"
+            v-model="ingredient"
             placeholder="Choose main ingredient"
             size="large"
             filterable
@@ -88,5 +95,5 @@ function getCocktails() {
   flex-wrap: wrap
   max-height: 100vh
   overflow-y: auto
-  margin-top: 60px   
+  margin-top: 60px
 </style>
